@@ -11,7 +11,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '172.23.3.18', // Replace with your desired IP address
+    host: 'localhost', // Replace with your desired IP address
     port: 3001,            // Port for Vite's dev server
     proxy: {
       '/api': {
