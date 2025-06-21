@@ -5,6 +5,7 @@ import CreateAccount from './Pages/CreateAccount.jsx';
 import React  from 'react';
 import Adminstation from './Pages/Adminstation.jsx';
 import Chat from './Pages/Chat.jsx';
+import Post from './Pages/Component/Post.jsx';
 
 function App() {
     const [userId, setUserId] = React.useState(() => {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/chat" element={<Chat userId={userId} />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/adminstation" element={<Adminstation />} />
+        <Route path="/test" element={<Post />} />
       </Routes>
     </Router>
   );

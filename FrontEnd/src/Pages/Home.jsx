@@ -24,7 +24,7 @@ export default function Home({ userId }) {
                 <ul>
                     {user && user.user_id !== 0 ? ( // Check if user exists and is valid
                         <>
-                            <li><a href="/adminstation">Admin Station</a></li>
+                            {/* <li><a href="/adminstation">Admin Station</a></li> */}
                             <li><a href={`/chat?userid=${userId}`}>Chat</a></li>
                         </>
                     ) : (
