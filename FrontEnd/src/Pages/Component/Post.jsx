@@ -1,17 +1,7 @@
-import React from "react";
-import {
-  fetchAllData,
-  addUserData,
-  fetchAllUsers,
-  deleteUserData,
-  handleFileUpload,
-  handleDeleteFile,
-} from "../control.js";
-
-const API_BASE = '/api';
-
-function Chat({ userId }) {
-  const [messages, setMessages] = React.useState([]);
+// import '../../Style/Post.css'
+// import { handleDeleteMessage, handleCopyText } from "../../control.js";
+export default function Post({ message, index}) {
+    const [messages, setMessages] = React.useState([]);
   const [text, setText] = React.useState("");
   const [file, setFile] = React.useState(null);
   const [link, setLink] = React.useState("")
@@ -211,177 +201,85 @@ function Chat({ userId }) {
       alert("Could not capture screen. Please allow screen sharing permission.");
     }
   };
+    const userName = users.find((u) => u.user_id === message.user_id)?.name | "Unknown User";
 
-  // --- Styles ---
-  const styles = {
-    container: { fontFamily: "Arial, sans-serif", padding: "20px" },
-    inputContainer: { marginBottom: "20px" , display: "flex"},
-    inputButton: { margin: "auto", padding: "10px 5px",},
-    messageList: { listStyleType: "none", padding: 0 },
-    messageItem: {
-      display: "grid",
-      gridTemplateColumns: "auto 1fr auto auto",
-      marginBottom: "10px",
-    },
-    deleteButton: {
-      backgroundColor: "#f44336",
-      color: "white",
-      border: "none",
-      padding: "5px 10px",
-      cursor: "pointer",
-      borderRadius: "5px",
-      margin: "auto",
-    },
-    deleteButtonHover: { backgroundColor: "#d32f2f" },
-    image: { maxWidth: "300px", maxHeight: "300px", borderRadius: "5px" },
-    audio: { marginLeft: "10px" },
-    video: { maxWidth: "300px", maxHeight: "300px", borderRadius: "5px" },
-    embed: { width: "300px", height: "400px" },
-    downloadButton: {
-      marginLeft: "10px",
-      backgroundColor: "#4CAF50",
-      color: "white",
-      border: "none",
-      padding: "5px 10px",
-      cursor: "pointer",
-      borderRadius: "5px",
-    },
-    copyButton: {
-      marginRight: "10px",
-      backgroundColor: "#2196F3",
-      color: "white",
-      border: "none",
-      padding: "5px 10px",
-      cursor: "pointer",
-      borderRadius: "5px",
-    },
-  };
-
-  return (
-    <div style={styles.container}>
-      <h1>Chat Page</h1>
-      <p>
-        {"Welcome to the chat page! " +
-          (users.find((u) => u.user_id == userId)?.name || "Unknown User")}
-      </p>
-      <div style={styles.inputContainer}>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Type your message here..."
+    return (
+    <li key={index} style={styles.messageItem}>
+        <strong>{userName}:</strong>
+        {message.type === "text" && (
+        <>
+            <span>{message.data}</span>
+            <button
+            style={styles.copyButton}
+            onClick={() => handleCopyText(message.data)}
+            >
+            Copy
+            </button>
+        </>
+        )}
+        {message.type === "image" && (
+        <img
+            src={`${API_BASE}/upload/${message.data}`}
+            alt={`Message ${index}`}
+            style={styles.image}
         />
-        <button style={styles.inputButton} onClick={() => handleSendMessage("text")}>Send Text</button>
-        <button style={styles.inputButton} onClick={() => handleSendMessage("link")}>Send Link</button>
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-        <button style={styles.inputButton} onClick={() => handleSendMessage("file")}>Send File</button>
-
-        {/* Audio Recording Controls */}
-        <div style={{ marginTop: 10 }}>
-          {!isRecording ? (
-            <button style={styles.inputButton} onClick={startRecording}>Start Audio Recording</button>
-          ) : (
-            <button style={styles.inputButton} onClick={stopRecording}>Stop Audio Recording</button>
-          )}
-          <button onClick={takeScreenshot} style={styles.inputButton}>
-            Take Screenshot
-          </button>
-        </div>
-      </div>
-
-      <ul style={styles.messageList}>
-        {messages.map((message, index) => {
-          const userName =
-            users.find((u) => u.user_id === message.user_id)?.name ||
-            "Unknown User";
-
-          return (
-            <li key={index} style={styles.messageItem}>
-              <strong>{userName}:</strong>
-              {message.type === "text" && (
-                <>
-                  <span>{message.data}</span>
-                  <button
-                    style={styles.copyButton}
-                    onClick={() => handleCopyText(message.data)}
-                  >
-                    Copy
-                  </button>
-                </>
-              )}
-              {message.type === "image" && (
-                <img
-                  src={`${API_BASE}/upload/${message.data}`}
-                  alt={`Message ${index}`}
-                  style={styles.image}
-                />
-              )}
-              {message.type === "audio" && (
-                <audio controls style={styles.audio}>
-                  <source
-                    src={`${API_BASE}/upload/${message.data}`}
-                    type="audio/mp3"
-                  />
-                  Your browser does not support the audio element.
-                </audio>
-              )}
-              {message.type === "video" && (
-                <video controls style={styles.video}>
-                  <source
-                    src={`${API_BASE}/upload/${message.data}`}
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video element.
-                </video>
-              )}
-              {message.type === "application" && (
-                <>
-                  <embed
-                    src={`${API_BASE}/upload/${message.data}`}
-                    style={styles.embed}
-                  />
-                  <a
-                    href={`${API_BASE}/upload/${message.data}`}
-                    download
-                    style={styles.downloadButton}
-                  >
-                    Download
-                  </a>
-                </>
-              )}
-              {
-                message.type === "link" && (
-                  <>
-                    <a href={message.data}>{message.data}</a>
-                    <button
-                      style={styles.copyButton}
-                      onClick={() => handleCopyText(message.data)}
-                    >Copy</button>
-                  </>
-                )
-              }
-              <button
-                style={styles.deleteButton}
-                onMouseOver={(e) =>
-                  (e.target.style.backgroundColor = styles.deleteButtonHover.backgroundColor)
-                }
-                onMouseOut={(e) =>
-                  (e.target.style.backgroundColor = styles.deleteButton.backgroundColor)
-                }
-                onClick={() => handleDeleteMessage(message.user_id, message.id, message.data)}
-              >
-                Delete
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
+        )}
+        {message.type === "audio" && (
+        <audio controls style={styles.audio}>
+            <source
+            src={`${API_BASE}/upload/${message.data}`}
+            type="audio/mp3"
+            />
+            Your browser does not support the audio element.
+        </audio>
+        )}
+        {message.type === "video" && (
+        <video controls style={styles.video}>
+            <source
+            src={`${API_BASE}/upload/${message.data}`}
+            type="video/mp4"
+            />
+            Your browser does not support the video element.
+        </video>
+        )}
+        {message.type === "application" && (
+        <>
+            <embed
+            src={`${API_BASE}/upload/${message.data}`}
+            style={styles.embed}
+            />
+            <a
+            href={`${API_BASE}/upload/${message.data}`}
+            download
+            style={styles.downloadButton}
+            >
+            Download
+            </a>
+        </>
+        )}
+        {
+        message.type === "link" && (
+            <>
+            <a href={message.data}>{message.data}</a>
+            <button
+                style={styles.copyButton}
+                onClick={() => handleCopyText(message.data)}
+            >Copy</button>
+            </>
+        )
+        }
+        <button
+        style={styles.deleteButton}
+        onMouseOver={(e) =>
+            (e.target.style.backgroundColor = styles.deleteButtonHover.backgroundColor)
+        }
+        onMouseOut={(e) =>
+            (e.target.style.backgroundColor = styles.deleteButton.backgroundColor)
+        }
+        onClick={() => handleDeleteMessage(message.user_id, message.id, message.data)}
+        >
+        Delete
+        </button>
+    </li>
+    );
 }
-
-export default Chat;

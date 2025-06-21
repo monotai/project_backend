@@ -1,0 +1,24 @@
+{
+  "name": "facebook",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon BackEnd/server.js",
+    "dev": "cd FrontEnd && npx vite",
+    "all": "concurrently \"npm run server\" \"npm run dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monotai/Chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monotai/Chat/issues"
+  },
+  "homepage": "https://github.com/monotai/Chat#readme",
+  "description": ""
+}
