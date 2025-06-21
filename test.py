@@ -22,3 +22,5 @@ else:
 # Delete the file
 # response = requests.delete(f"{BASE_URL}/{TEST_FILE}")
 # print("Delete Response:", response.json())
+
+hello = "world"
