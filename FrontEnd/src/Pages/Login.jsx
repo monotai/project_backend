@@ -1,41 +1,74 @@
-import React from 'react';
-import { getUserByName } from '../control.js';
-import { useNavigate } from 'react-router-dom';
-const Login = ({setUserId}) => {
-    const navigate = useNavigate();
 
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import "../Style/Auth.css";
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const user = await getUserByName(username);
-        if (user && user.password === password) {
-            setUserId(user.user_id); // Update the userId state
-            navigate("/"); // Redirect to home page
-        } else {
-            alert("Invalid username or password!");
-        }
-    };
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    return (
-        <div className="login-container">
-        <h1>Login Page</h1>
-        <form>
-            <div>
-            <label htmlFor="username">Username:</label>
-            <input type="text" id="username" name="username" value={username} onChange={e => setUsername(e.target.value)} required />
-            </div>
-            <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" value={password} onChange={e => setPassword(e.target.value)} required />
-            </div>
-            <button type="submit" onClick={handleSubmit}>Login</button>
-            <a href="/create-account">Create Account</a>
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (!storedUser) {
+    setError("No user found. Please sign up first.");
+    return;
+  }
+
+  if (
+    formData.email === storedUser.email &&
+    formData.password === storedUser.password
+  ) {
+    // Save essential info to localStorage
+    localStorage.setItem("userId", Date.now()); // You can replace with storedUser.userId if available
+    localStorage.setItem("firstName", storedUser.fName);
+    localStorage.setItem("lastName", storedUser.lName);
+
+    alert("Login successful!");
+    navigate("/Sidebar");
+  } else {
+    setError("Incorrect username or password. Please try again.");
+    setFormData ({ email: "", password:" "});
+  }
+};
+
+  return (
+    <div className="container">
+      <h1 className="facebook-title">facebooks</h1>
+
+      <div className="auth-container">
+
+        {error && <p className="error-message">{error}</p>}
+
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <input type="email" name="email" placeholder="Email or Phone number"  value={formData.email} onChange={handleChange}required
+          />
+
+          <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required
+          />
+
+          <button type="submit" className="login-button">Login</button>
+          <a href="#" style={{ fontSize: '12px', textAlign: 'center',marginTop: '10px' }}>Forgotten password?</a>
+
         </form>
-        </div>
-    );
-}
 
+        <hr className="divider" />
+        <Link to="/create-account">
+          <button className="signup-button">Create New Account</button>
+
+        </Link>
+      </div>
+    </div>
+  );
+};
 export default Login;
