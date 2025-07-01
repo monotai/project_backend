@@ -1,0 +1,103 @@
+.sidebar {
+  width: 260px;
+  background-color: #f0f2f5;
+  padding: 16px 12px;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+
+}
+
+.facebook-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.facebook-icon {
+  font-size: 34px;
+  color: #1877f2;
+  margin-right: 8px;
+  margin-bottom: 10px;
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #606770;
+  font-size: 14px;
+}
+
+.search-box {
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  border-radius: 25px;
+  border: none;
+  background-color: #e4e6eb;
+  font-size: 14px;
+  outline: none;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 12px;
+}
+
+.profile:hover {
+  background-color: #d8dadf;
+}
+
+.profile-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 8px; 
+  border-radius: 8px; 
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 4px;
+  border: none;
+  background-color:#f0f2f5 ;
+}
+
+.menu-item:hover {
+  background-color: #d8dadf;
+}
+
+.icon {
+  font-size: 30px;
+  margin-right: 14px;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  font-size: 15px;
+  color: #050505;
+  font-weight: 500;
+}
