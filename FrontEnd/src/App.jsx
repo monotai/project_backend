@@ -6,6 +6,8 @@ import React  from 'react';
 import Adminstation from './Pages/Adminstation.jsx';
 import Chat from './Pages/Chat.jsx';
 import Post from './Pages/Component/Post.jsx';
+import Sidebar from './Pages/Component/Sidebar.jsx';
+import PostCard from './Pages/Component/PostCard.jsx';
 
 function App() {
     const [userId, setUserId] = React.useState(() => {
@@ -28,6 +30,8 @@ function App() {
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/adminstation" element={<Adminstation />} />
         <Route path="/test" element={<Post />} />
+        <Route path='/sidebar' element={<Sidebar /> } />
+        <Route path='post' element={<PostCard />} />
       </Routes>
     </Router>
   );
