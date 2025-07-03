@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon BackEnd/server.js",
     "dev": "cd FrontEnd && npx vite",
+    "test": "nodemon BackEnd/app.js",
     "all": "concurrently \"npm run server\" \"npm run dev\""
   },
   "repository": {

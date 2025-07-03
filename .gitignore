@@ -4,5 +4,7 @@
 /downloaded_video.mp3
 /sound.mp3
 /BackEnd/node_modules
+/BackEnd/.env
+/BackEnd/uploads/
 /post
 /bar

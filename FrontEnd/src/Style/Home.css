@@ -1,0 +1,14 @@
+.home-pages {
+  padding: 20px;
+}
+
+.home-sidebar {
+  position: fixed;
+}
+
+.home-posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

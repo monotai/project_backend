@@ -41,6 +41,8 @@ const SignUp = () => {
     setFormData({ fullName: "", username: "", email: "", phone: "", password: "" });
   };
 
+  
+
   return (
     <div className="container">
     <h1 className="facebook-title">facebooks</h1>
@@ -56,7 +58,7 @@ const SignUp = () => {
         <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
         <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
         <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-        <button type="submit" >Submit</button>
+        <button type="submit"  >Submit</button>
       </form>
     <div className="sigin-text" style={{ fontSize: '12px', textAlign: 'center',marginTop: '10px' }}>
       <p>Have an account?  

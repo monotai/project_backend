@@ -1,37 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { getUserById } from "../control.js";
+import Post from "./Component/Post";
+import PostCard from "./Component/PostCard";
+import Sidebar from "./Component/Sidebar";
+import "../Style/Home.css"; // Adjust the path as necessary
 
-export default function Home({ userId }) {
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            if (userId) {
-                const fetchedUser = await getUserById(userId);
-                setUser(fetchedUser);
-            }
-        };
-        fetchUser();
-    }, [userId]);
-
-    return (
-        <div className="home">
-            <h1>
-                {"Welcome " + (user ? user.name : "") + " to the Chat Application"}
-            </h1>
-            <p>This is the home page. You can navigate to different sections from here.</p>
-            <nav>
-                <ul>
-                    {user && user.user_id !== 0 ? ( // Check if user exists and is valid
-                        <>
-                            {/* <li><a href="/adminstation">Admin Station</a></li> */}
-                            <li><a href={`/chat?userid=${userId}`}>Chat</a></li>
-                        </>
-                    ) : (
-                        <li><a href="/login">Login</a></li>
-                    )}
-                </ul>
-            </nav>
+export default function Home() {
+  return <>
+    <div className="home-pages">
+        <div className="home-sidebar">
+          <Sidebar />
         </div>
-    );
+        <div className="home-posts">
+          <PostCard name={"Sina Ravy"} profile={"/images/image.png"} text={"Miss you so much 😘#VY💗"} image={"/images/image.png"}/>
+          {Array.from({ length: 20 }).map((_, idx) => (
+            <PostCard
+              key={idx}
+              name={`User ${idx + 1}`}
+              profile={`https://randomuser.me/api/portraits/men/${(idx % 10) + 1}.jpg`}
+              text={`Random post #${idx + 1} - Lorem ipsum dolor sit amet.`}
+              image={`https://picsum.photos/seed/${idx + 1}/300/200`}
+            />
+          ))}
+        </div>
+    </div>
+    </>;
 }

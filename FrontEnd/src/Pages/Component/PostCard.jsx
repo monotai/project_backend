@@ -1,6 +1,6 @@
 
 import React from "react";
-import "./PostCard.css";
+import "../../Style/PostCard.css"; // Adjust the path as necessary
 import {
   FaGlobeAsia,
   FaThumbsUp,
@@ -10,23 +10,27 @@ import {
   FaKissWinkHeart,
 } from "react-icons/fa";
 
-const PostCard = () => {
+const PostCard = ({ name, profile, text, image}) => {
   return (
     <div className="post-card">
       <div className="post-header">
-        <img src="/images/image.png" alt="Sina Ravy" className="avatar" />
+        <img src={profile} alt="Sina Ravy" className="avatar" />
         <div>
-          <h3>Sina Ravy</h3>
+          <h3>
+            {/* Sina Ravy */}
+            {name}
+          </h3>
           <p>1m • <FaGlobeAsia /></p>
         </div>
       </div>
 
       <div className="post-caption">
-        Miss you so much 😘#VY💗
+        {/* Miss you so much 😘#VY💗 */}
+        {text}
       </div>
 
       <div className="post-image">
-        <img src="/images/image.png" alt="Post content" />
+        <img src={image} alt="Post content" />
       </div>
 
       <div className="post-reactions">

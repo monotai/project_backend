@@ -24,7 +24,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home userId={userId} />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login setUserId={handleSetUserId} />} />
         <Route path="/chat" element={<Chat userId={userId} />} />
         <Route path="/create-account" element={<CreateAccount />} />
