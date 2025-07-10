@@ -23,6 +23,15 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Logins table
+CREATE TABLE logins (
+  login_id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  login_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_logins_user_id ON logins(user_id);
+
 -- Posts table
 CREATE TABLE posts (
   post_id SERIAL PRIMARY KEY,

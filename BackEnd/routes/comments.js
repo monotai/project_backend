@@ -1,5 +1,4 @@
-import express from 'express';
-import pool from '../db/index.js'; // Adjust the path as necessary
+import express from 'express';// PostgreSQL connection pool
 const router = express.Router();
 
 // Get all comments for a post
