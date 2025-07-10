@@ -1,17 +1,23 @@
 import '../../Style/PostCard.css';
-export default function Uploadbar() {
+import { useNavigate } from 'react-router-dom';
+
+export default function Uploadbar({name}) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/create-post');
+  };
   return (
     <div className="post-card">
       <div className="upload-container">
-        <img src="/images/image.png" alt="User Profile" className="avatar" />
-        <input type="text" placeholder="What's on your mind?" className="upload-input" />
+        <img src="/images/profile.png" alt="User Profile" className="avatar" />
+        <input type="text" placeholder={`What's on your mind, ${name}?`} className="upload-input" onClick={() => handleClick()} />
       </div>
       <hr className='line' />
       <div className="upload-options">
-        <button className="upload-button">Photo/Video</button>
-        <button className="upload-button">Tag Friends</button>
-        <button className="upload-button">Feeling/Activity</button>
+        <button className="upload-button" onClick={handleClick}>Photo/Video</button>
+        <button className="upload-button" onClick={handleClick}>Tag Friends</button>
+        <button className="upload-button" onClick={handleClick}>Feeling/Activity</button>
       </div>
     </div>
   );
-}
+};

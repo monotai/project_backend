@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../Style/Auth.css";
-import { getUserByEmail, storeLocally } from "../control";
+import { getLocally, getUserByEmail, storeLocally } from "../control";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -30,8 +30,7 @@ const handleSubmit = async (e) => {
     formData.password === user.password
   ) {
     // Save essential info to localStorage
-    storeLocally("user", user.user_id);
-    alert("Login successful!");
+    storeLocally("user", user);
     navigate("/home");
   } else {
     setError("Incorrect username or password. Please try again.");

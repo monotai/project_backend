@@ -30,7 +30,7 @@ const PostCard = ({ name, profile, text, image}) => {
       </div>
 
       <div className="post-image">
-        <img src={image} alt="Post content" />
+        {image ? <img src={image} alt="Post content" /> : null}
       </div>
 
       <div className="post-reactions">

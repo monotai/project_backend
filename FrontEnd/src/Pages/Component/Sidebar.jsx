@@ -30,9 +30,9 @@ const menuItems = [
   { icon: <FcBookmark  />, label: 'Saved' },
   { icon: <TfiArrowCircleDown style={{ color: '#65676b' }} />, label: 'See More' },
 ];
-function Sidebar() {
-  const user = getLocally('user');
-  const username = user ? user.username : 'Guest';
+function Sidebar({name}) {
+  const username = name ? name : 'Guest';
+  // alert(`Welcome, ${username}!`);
   return (
     <div className="sidebar">
 
@@ -49,7 +49,7 @@ function Sidebar() {
       {/* Profile Section */}
         <div className="profile">
         <img
-          src={userProfile}
+          src={'/images/profile.png'}
           alt={`${username}'s profile`}
           className="profile-img"
         />

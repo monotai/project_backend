@@ -2,6 +2,30 @@ import axios from 'axios';
 
 const API_BASE_URL = '/api'; // Adjust to your backend server
 
+export const storeLocally = (key, data) => {
+  try {
+    // Convert data to string before saving
+    const jsonData = JSON.stringify(data);
+    localStorage.setItem(key, jsonData);
+  } catch (error) {
+    console.error("Failed to store data in localStorage:", error);
+  }
+};
+
+export const getLocally = (key) => {
+  try {
+    const jsonData = localStorage.getItem(key);
+    if (jsonData) {
+        return JSON.parse(jsonData);
+    }
+    return null; // Return null if no data found
+    }
+    catch (error) {
+    console.error("Failed to retrieve data from localStorage:", error);
+    return null; // Return null in case of error
+    }
+};
+
 // Create a new user
 export const createUser = async (newUser) => {
     try {
@@ -357,4 +381,61 @@ export const deleteReaction = async (id) => {
         console.error("Error deleting reaction:", error.response?.data || error.message);
         return false;
     }
+};
+
+// Upload a file to the server
+export const handleFileUpload = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(`${API_BASE_URL}/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`File upload failed: ${errText}`);
+  }
+
+  const result = await response.json();
+
+  // Expect: { message: 'File <filename> uploaded successfully' }
+  // So split message to extract filename
+  return result.message.split(" ")[1]; // Returns the filename
+};
+
+// Get/download file from server
+export const handleFileGet = async (filename) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/upload/${filename}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch file");
+    }
+
+    const blob = await response.blob();
+    return URL.createObjectURL(blob); // Returns URL to use in <img>, <video>, etc.
+  } catch (error) {
+    console.error("Failed to fetch file:", error);
+    return null;
+  }
+};
+
+// Delete file from server
+export const handleDeleteFile = async (filename) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/upload/${filename}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete file");
+    }
+
+    const result = await response.json();
+    console.log(result.message);
+  } catch (error) {
+    console.error("Failed to delete file:", error);
+  }
 };

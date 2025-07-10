@@ -15,6 +15,7 @@ import reactionsRouter from './routes/reactions.js';
 import friendshipsRouter from './routes/friendships.js';
 import notificationsRouter from './routes/notifications.js';
 import messagesRouter from './routes/messages.js';
+import uploadRouter from './routes/upload.js';
 
 // Use routers
 app.use('/users', usersRouter);
@@ -24,6 +25,7 @@ app.use('/reactions', reactionsRouter);
 app.use('/friendships', friendshipsRouter);
 app.use('/notifications', notificationsRouter);
 app.use('/messages', messagesRouter);
+app.use('/upload', uploadRouter);
 
 // Base route
 app.get('/', (req, res) => {

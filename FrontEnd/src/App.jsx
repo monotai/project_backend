@@ -9,6 +9,7 @@ import Sidebar from './Pages/Component/Sidebar.jsx';
 import PostCard from './Pages/Component/PostCard.jsx';
 import Test from './Pages/Test.jsx';
 import CreatePost from './Pages/Component/CreatePost.jsx';
+import Welcome from './Pages/Welcome.jsx';
 
 function App() {
     const [userId, setUserId] = React.useState(() => {
@@ -25,6 +26,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Welcome />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login setUserId={handleSetUserId} />} />
         <Route path="/chat" element={<Chat userId={userId} />} />
