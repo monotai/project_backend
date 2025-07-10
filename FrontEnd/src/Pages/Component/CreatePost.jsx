@@ -19,6 +19,18 @@ export default function CreatePost() {
     setText(prev => prev + emojiObject.emoji);
   };
 
+
+  const handleUploadImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="create-post">
       <h2>Create Post</h2>
@@ -26,21 +38,21 @@ export default function CreatePost() {
       <div className='profile'></div>
 
       <div className='display-post'>
-        <input
-          type="text"
+        <textarea
           placeholder="What's on your mind?"
-          className="post-input"
+          className="add-post-input"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          rows={4}
         />
 
-        <div className='post-image'>
+        <div className='add-post-image'>
           {/* If image is set, show preview */}
           {image && <img src={image} alt="Preview" className="preview-image" />}
         </div>
-        <div className='post-design'>
+        <div className='add-post-design'>
           <div className='picker'>
-            <img src={colorImg} alt="Background Color" className='post-image' />
+            <img src={colorImg} alt="Background Color" className='add-post-image' />
             <img src={emoji} alt="Emoji" onClick={() => setShowEmojiPicker(!showEmojiPicker)} className='add-image' />
           </div>
           {showEmojiPicker && (
@@ -52,7 +64,19 @@ export default function CreatePost() {
         <div className='add-to-post'>
           <p>Add to your post</p>
           <div className="add-icons">
-            <img src={addImage} alt="Add Image" className='add-image' />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              id="add-image-input"
+              onChange={handleUploadImage}
+            />
+            <img
+              src={addImage}
+              alt="Add Image"
+              className='add-image'
+              onClick={() => document.getElementById('add-image-input').click()}
+            />
             <img src={addTag} alt="Add Tag" className='add-image' />
             <img src={addFeeling} alt="Add Feeling" className='add-image' />
             <img src={addLocation} alt="Add Location" className='add-image' />
