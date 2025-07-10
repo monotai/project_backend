@@ -2,6 +2,30 @@ import axios from 'axios';
 
 const API_BASE_URL = '/api';
 
+export const storeLocally = (key, data) => {
+  try {
+    // Convert data to string before saving
+    const jsonData = JSON.stringify(data);
+    localStorage.setItem(key, jsonData);
+  } catch (error) {
+    console.error("Failed to store data in localStorage:", error);
+  }
+};
+
+export const getLocally = (key) => {
+  try {
+    const jsonData = localStorage.getItem(key);
+    if (jsonData) {
+        return JSON.parse(jsonData);
+    }
+    return null; // Return null if no data found
+    }
+    catch (error) {
+    console.error("Failed to retrieve data from localStorage:", error);
+    return null; // Return null in case of error
+    }
+};
+
 export const fetchAllUsers = async () => {
     try {
         const response = await axios.get(`${API_BASE_URL}/users`);
@@ -63,6 +87,25 @@ export const getUserByName = async (name) => {
         return null;
     }
 };
+
+export const getUserByEmail = async (email) => {
+    try {
+        const allUsers = await fetchAllUsers();
+        
+        const user = allUsers.find(user => user.email === email);
+        if (user) {
+            return user;
+        }
+        else {
+            console.error("User not found");
+            return null;
+        }
+    }
+    catch (error) {
+        console.error("Error fetching users by email:", error);
+        return null;
+    }
+}
 
 const updateEntity = async (url, updatedData, setData) => {
     try {

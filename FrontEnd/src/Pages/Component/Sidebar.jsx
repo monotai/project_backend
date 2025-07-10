@@ -18,6 +18,7 @@ import {
   FcBookmark,
   TfiArrowCircleDown,
 } from '../../assets/Icon/Icons';
+import { getLocally } from '../../control';
 const menuItems = [
   { icon: <FaUserFriends style={{ color: '#1877f2' }} />, label: 'Friends' },
   { icon: <RiBarChartBoxFill style={{ color: '#1877f2' }} />, label: 'Professional dashboard' },
@@ -30,8 +31,8 @@ const menuItems = [
   { icon: <TfiArrowCircleDown style={{ color: '#65676b' }} />, label: 'See More' },
 ];
 function Sidebar() {
-  const firstName = localStorage.getItem('firstName') || 'User';
-  const lastName = localStorage.getItem('lastName') || '';
+  const user = getLocally('user');
+  const username = user ? user.username : 'Guest';
   return (
     <div className="sidebar">
 
@@ -49,10 +50,10 @@ function Sidebar() {
         <div className="profile">
         <img
           src={userProfile}
-          alt={`${firstName} ${lastName}`}
+          alt={`${username}'s profile`}
           className="profile-img"
         />
-        <span className="label">{`${firstName} ${lastName}`}</span>
+        <span className="label">{`${username}`}</span>
       </div>
 
       {/* Menu Items */}

@@ -1,7 +1,8 @@
-import Post from "./Component/Post";
+
 import PostCard from "./Component/PostCard";
 import Sidebar from "./Component/Sidebar";
 import "../Style/Home.css"; // Adjust the path as necessary
+import Uploadbar from "./Component/Uploadbar";
 
 export default function Home() {
   return <>
@@ -10,6 +11,7 @@ export default function Home() {
           <Sidebar />
         </div>
         <div className="home-posts">
+          <Uploadbar />
           <PostCard name={"Sina Ravy"} profile={"/images/image.png"} text={"Miss you so much 😘#VY💗"} image={"/images/image.png"}/>
           {Array.from({ length: 20 }).map((_, idx) => (
             <PostCard

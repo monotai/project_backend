@@ -5,9 +5,10 @@ import CreateAccount from './Pages/CreateAccount.jsx';
 import React  from 'react';
 import Adminstation from './Pages/Adminstation.jsx';
 import Chat from './Pages/Chat.jsx';
-import Post from './Pages/Component/Post.jsx';
 import Sidebar from './Pages/Component/Sidebar.jsx';
 import PostCard from './Pages/Component/PostCard.jsx';
+import Test from './Pages/Test.jsx';
+import CreatePost from './Pages/Component/CreatePost.jsx';
 
 function App() {
     const [userId, setUserId] = React.useState(() => {
@@ -29,9 +30,10 @@ function App() {
         <Route path="/chat" element={<Chat userId={userId} />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/adminstation" element={<Adminstation />} />
-        <Route path="/test" element={<Post />} />
+        <Route path="/test" element={<Test />} />
         <Route path='/sidebar' element={<Sidebar /> } />
-        <Route path='post' element={<PostCard />} />
+        <Route path='/post' element={<PostCard />} />
+        <Route path="/create-post" element={<CreatePost />}/>
       </Routes>
     </Router>
   );

@@ -7,7 +7,7 @@
     "server": "nodemon BackEnd/server.js",
     "dev": "cd FrontEnd && npx vite",
     "test": "nodemon BackEnd/app.js",
-    "all": "concurrently \"npm run server\" \"npm run dev\""
+    "all": "concurrently \"npm run test\" \"npm run dev\""
   },
   "repository": {
     "type": "git",

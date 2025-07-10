@@ -6,12 +6,14 @@ const API_BASE_URL = '/api'; // Adjust to your backend server
 export const createUser = async (newUser) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/users`, newUser);
+        // alert(`Welcome, ${newUser.firstname}! Your account has been created.`);
         return response.data; // return created user
     } catch (error) {
         console.error("Error creating user:", error.response?.data || error.message);
         return null;
     }
 };
+
 
 // Get all users
 export const getUsers = async () => {
@@ -65,7 +67,7 @@ export const createComment = async (newComment) => {
         console.error("Error creating comment:", error.response?.data || error.message);
         return null;
     }
-}
+};
 
 export const getComments = async () => {
     try {
@@ -115,7 +117,7 @@ export const createFriendship = async (newFriendship) => {
         console.error("Error creating friendship:", error.response?.data || error.message);
         return null;
     }
-}
+};
 
 export const getFriendships = async () => {
     try {
@@ -157,7 +159,7 @@ export const deleteFriendship = async (id) => {
     }
 };
 
-export const createmessage = async (newMessage) => {
+export const createMessage = async (newMessage) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/messages`, newMessage);
         return response.data; // return created message
@@ -165,7 +167,7 @@ export const createmessage = async (newMessage) => {
         console.error("Error creating message:", error.response?.data || error.message);
         return null;
     }
-}
+};
 
 export const getMessages = async () => {
     try {
@@ -215,7 +217,7 @@ export const createNotification = async (newNotification) => {
         console.error("Error creating notification:", error.response?.data || error.message);
         return null;
     }
-}
+};
 
 export const getNotifications = async () => {
     try {
@@ -265,7 +267,7 @@ export const createPost = async (newPost) => {
         console.error("Error creating post:", error.response?.data || error.message);
         return null;
     }
-}
+};
 
 export const getPosts = async () => {
     try {
@@ -315,8 +317,7 @@ export const createReaction = async (newReaction) => {
         console.error("Error creating reaction:", error.response?.data || error.message);
         return null;
     }
-}   
-
+};
 
 export const getReactions = async () => {
     try {

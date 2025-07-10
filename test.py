@@ -1,26 +1,27 @@
 import requests
+# Your API endpoint
+API_URL = 'http://localhost:4576/users'
 
-BASE_URL = "http://192.168.14.210:3000/upload"
-TEST_FILE = "Phal_Sovandy_HW1.pdf"
-NEW_FILE_NAME = "downloaded.pdf"
+# Create randomized user data to avoid unique constraint violations
 
-# Upload the file
-# with open(TEST_FILE, 'rb') as f:
-#     files = {'file': (TEST_FILE, f)}
-#     response = requests.post(BASE_URL, files=files)
-#     print("Upload Response:", response.json())
+new_user = {
+    "firstname": "Jane",
+    "lastname": "Doe",
+    "username": "janedoe",
+    "email": "jane@example.com",
+    "phonenumber": "010",
+    "password": "SecurePass123!",
+    "profile_image_url": "https://example.com/profile.jpg"
+}
 
-# Download the file
-response = requests.get(f"{BASE_URL}/{TEST_FILE}")
-if response.status_code == 200:
-    with open(NEW_FILE_NAME, 'wb') as f:
-        f.write(response.content)
-    print(f"File saved as {NEW_FILE_NAME}")
-else:
-    print("Download Response:", response.json())
+# Send POST request
+response = requests.post(API_URL, json=new_user)
+# response = requests.get(API_URL)
 
-# Delete the file
-# response = requests.delete(f"{BASE_URL}/{TEST_FILE}")
-# print("Delete Response:", response.json())
-
-hello = "world"
+# Print results
+print("Status Code:", response.status_code)
+try:
+    print("Response:", response.json())
+except Exception as e:
+    print("Error parsing response:", e)
+    print("Raw text:", response.text)
