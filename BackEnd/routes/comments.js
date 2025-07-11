@@ -1,5 +1,6 @@
 import express from 'express';// PostgreSQL connection pool
 const router = express.Router();
+import pool from '../db/index.js'; // Adjust the path if needed
 
 // Get all comments for a post
 router.get('/post/:postId', async (req, res) => {

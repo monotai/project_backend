@@ -36,6 +36,7 @@ function App() {
         <Route path='/sidebar' element={<Sidebar /> } />
         <Route path='/post' element={<PostCard />} />
         <Route path="/create-post" element={<CreatePost />}/>
+        
       </Routes>
     </Router>
   );

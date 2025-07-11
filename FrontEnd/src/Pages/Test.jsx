@@ -1,36 +1,43 @@
-import React, { useState } from "react";
-
-import { createUser } from "../control/index.js"; // Adjust the import path as necessary
+import { createComment, deleteComment } from '../control/index.js';
+import React  from 'react';
 
 export default function Test() {
-  const formData = {
-    firstname: "John",
-    lastname: "Doe",
-    username: "johndoe",
-    email: "john@example.com",
-    phonenumber: "123456789",
-    password: "securePassword123",
-    profile_image_url: "https://example.com/images/johndoe.png"
-  };
-
-  // You need to define createUser or import it if it's from another file
-  const handleCreateUser = async () => {
-    try {
-      const response = await createUser(formData);
-      console.log("User created successfully:", response);
-      alert("User created successfully!");
-    } catch (error) {
-      console.error("Error creating user:", error);
-      alert("Failed to create user. Please try again.");
+    const comment = {
+        post_id: 1,
+        user_id: 1,
+        parent_comment_id: 1,
+        content_text: "Hello World!",
+        content_image_url: "test.png",
+        content_video_url: "none"
     }
-  };
 
+    const [id, setId] = React.useState(0);
+
+    const hanleComment = async () => {
+        const response = await createComment(comment);
+        setId(response.comment_id);
+        if (response) {
+            console.log("Comment created successfully");
+        } else {
+            console.error("Failed to create comment");
+        }
+    }
+
+    const handleDelete = async () => {
+        const response = await deleteComment(id);
+        if (response) {
+            console.log("Comment deleted successfully");
+        }
+        else {
+            console.error("Failed to delete comment");
+        }
+    }
   return (
     <div>
-      <h1>Test Page</h1>
-      <p>This is a test page to verify the setup.</p>
-      <p>test users api</p>
-      <button onClick={handleCreateUser}>Create User</button>
+      <h1>Test Component</h1>
+      <p>This is a simple test component.</p>
+      <button onClick={hanleComment}>comment</button>
+      <button onClick={handleDelete}>delete</button>
     </div>
   );
 }
