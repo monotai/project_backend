@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const API_BASE_URL = '/api'; // Adjust to your backend server
 
 export const storeLocally = (key, data) => {

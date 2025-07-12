@@ -16,7 +16,6 @@ import friendshipsRouter from './routes/friendships.js';
 import notificationsRouter from './routes/notifications.js';
 import messagesRouter from './routes/messages.js';
 import uploadRouter from './routes/upload.js';
-
 // Use routers
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
