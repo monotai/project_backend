@@ -10,6 +10,7 @@ import PostCard from './Pages/Component/PostCard.jsx';
 import Test from './Pages/Test.jsx';
 import CreatePost from './Pages/Component/CreatePost.jsx';
 import Welcome from './Pages/Welcome.jsx';
+import Comments from './Pages/Component/Comment.jsx'
 
 function App() {
     const [userId, setUserId] = React.useState(() => {
@@ -36,6 +37,7 @@ function App() {
         <Route path='/sidebar' element={<Sidebar /> } />
         <Route path='/post' element={<PostCard />} />
         <Route path="/create-post" element={<CreatePost />}/>
+        <Route path="/comments" element={<Comments />} />
         
       </Routes>
     </Router>
