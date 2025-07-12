@@ -42,6 +42,7 @@ export default function Home() {
           ))} */}
           {posts.map((post, index) => (
             <PostCard
+              id={post.post_id}
               key={index}
               name={users.find(u => u.user_id === post.user_id)?.username || 'Unknown User'}
               profile="/images/profile.png"
@@ -51,6 +52,7 @@ export default function Home() {
                   ? `http://localhost:3001/api/upload/${post.content_image_url.replace(/(^"|"$)/g, '')}`
                   : undefined
               }
+              onDelelet={() => setPosts(posts.filter(p => p.post_id !== post.post_id))}
             />
           ))}
         </div>

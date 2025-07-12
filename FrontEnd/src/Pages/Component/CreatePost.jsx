@@ -2,7 +2,7 @@ import React from 'react';
 import '../../Style/CreatePost.css';
 import colorImg from '../../assets/color.png';
 import EmojiPicker from 'emoji-picker-react';
-import addImage from '../../assets/addImage.png';
+import addMedia from '../../assets/addImage.png';
 import addTag from '../../assets/addTag.png';
 import addFeeling from '../../assets/addFeeling.png';
 import addLocation from '../../assets/addMap.png';
@@ -17,7 +17,7 @@ export default function CreatePost() {
   const navigate = useNavigate();
   const user = getLocally('user');
   const [imagePreview, setImagePreview] = React.useState("");
-  const [imageFile, setImageFile] = React.useState(null);
+  const [mediaFile, setMediaFile] = React.useState(null);
   const [text, setText] = React.useState("");
   const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
 
@@ -31,10 +31,10 @@ export default function CreatePost() {
     return `${random}.${ext}`;
   };
 
-  const handleUploadImage = (event) => {
+  const handleUploadMedia = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setImageFile(file);
+      setMediaFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -44,29 +44,29 @@ export default function CreatePost() {
   };
 
   const handlePost = async () => {
-    if (text.trim() === "" && !imageFile) {
+    if (text.trim() === "" && !mediaFile) {
       alert("Please enter some text or upload an image.");
       return;
     }
 
     let uploadedFilename = "none";
 
-    if (imageFile) {
+    if (mediaFile) {
       try {
         let randomName;
         let exists = true;
 
         // Try random names until one doesn't exist
         while (exists) {
-          randomName = generateRandomFilename(imageFile.name);
+          randomName = generateRandomFilename(mediaFile.name);
           const fileURL = await handleFileGet(randomName);
           exists = !!fileURL;
         }
 
         // Create new File object with same data but new name
-        const renamedFile = new File([imageFile], randomName, {
-          type: imageFile.type,
-          lastModified: imageFile.lastModified,
+        const renamedFile = new File([mediaFile], randomName, {
+          type: mediaFile.type,
+          lastModified: mediaFile.lastModified,
         });
 
         // Upload using the renamed file
@@ -97,7 +97,7 @@ export default function CreatePost() {
     // Reset form
     setText("");
     setImagePreview("");
-    setImageFile(null);
+    setMediaFile(null);
   };
 
   return (
@@ -116,8 +116,11 @@ export default function CreatePost() {
         />
 
         <div className='add-post-image'>
-          {imagePreview && (
+          {imagePreview && mediaFile && mediaFile.type.startsWith("image") && (
             <img src={imagePreview} alt="Preview" className="preview-image" />
+          )}
+          {imagePreview && mediaFile && mediaFile.type.startsWith("video") && (
+            <video src={imagePreview} controls className="preview-image" />
           )}
         </div>
 
@@ -138,13 +141,13 @@ export default function CreatePost() {
           <div className="add-icons">
             <input
               type="file"
-              accept="image/*"
+              accept="image/*, video/*"
               style={{ display: "none" }}
               id="add-image-input"
-              onChange={handleUploadImage}
+              onChange={handleUploadMedia}
             />
             <img
-              src={addImage}
+              src={addMedia}
               alt="Add Image"
               className='add-image'
               onClick={() => document.getElementById('add-image-input').click()}
