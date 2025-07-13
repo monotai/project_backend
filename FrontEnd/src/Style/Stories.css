@@ -1,0 +1,141 @@
+.stories-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  padding-left: 220px;
+}
+
+.story-card {
+  position: relative;
+  width: 110px;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+
+.story-card.viewed {
+  border: 3px solid #d1d5db; /* gray */
+}
+
+.story-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.story-avatar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 36px;
+  height: 36px;
+  border: 3px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.story-avatar img,
+.add-story {
+  width: 100%;
+  height: 100%;
+  background: #3b82f6;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border-radius: 50%;
+}
+
+.story-username {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 400px;
+  width: 90%;
+  height: 70vh;
+  background: rgba(245, 245, 245, 0.322);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  color: whitaliceblue;
+}
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  background: transparent;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+.close-button:hover {
+  background: transparent;
+}
+
+
+.modal-image {
+  width: 100%;
+  height: auto;
+}
+
+.modal-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex:1;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  justify-content: flex-start;
+  margin-bottom: 50px;
+  
+  
+}
+
+.modal-user img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid whitesmoke;
+}
+/* In Home.css or Stories.css */
+.stories-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
