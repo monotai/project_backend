@@ -1,13 +1,8 @@
-
 // src/componenent/Sidebar.jsx
 import React from 'react';
 import '../../Style/Sidebar.css';
-import {
-  FaFacebook,
-  FaUserFriends,
-} from 'react-icons/fa';
+import {FaUserFriends} from 'react-icons/fa';
 import userProfile from '../../assets/user.png';
-import { BsSearch } from 'react-icons/bs';
 import {
   RiBarChartBoxFill,
   TbCalendarTime,
@@ -18,7 +13,7 @@ import {
   FcBookmark,
   TfiArrowCircleDown,
 } from '../../assets/Icon/Icons';
-import { getLocally } from '../../control';
+
 const menuItems = [
   { icon: <FaUserFriends style={{ color: '#1877f2' }} />, label: 'Friends' },
   { icon: <RiBarChartBoxFill style={{ color: '#1877f2' }} />, label: 'Professional dashboard' },
@@ -30,30 +25,22 @@ const menuItems = [
   { icon: <FcBookmark  />, label: 'Saved' },
   { icon: <TfiArrowCircleDown style={{ color: '#65676b' }} />, label: 'See More' },
 ];
-function Sidebar({name}) {
-  const username = name ? name : 'Guest';
-  // alert(`Welcome, ${username}!`);
+function Sidebar() {
+  const firstName = localStorage.getItem('firstName') || 'User';
+  const lastName = localStorage.getItem('lastName') || '';
   return (
     <div className="sidebar">
 
-      {/* Header with Facebook logo and search bar */}
-      <div className="facebook-header">
-        <FaFacebook className="facebook-icon" />
-        <div className="search-wrapper">
-          <BsSearch className="search-icon" />
-          <input type="text" placeholder="Search Facebook" className="search-box"
-          />
-        </div>
-      </div>
-
+        
+      {/* </div> */}
       {/* Profile Section */}
         <div className="profile">
         <img
-          src={'/images/profile.png'}
-          alt={`${username}'s profile`}
+          src={userProfile}
+          alt={`${firstName} ${lastName}`}
           className="profile-img"
         />
-        <span className="label">{`${username}`}</span>
+        <span className="label">{`${firstName} ${lastName}`}</span>
       </div>
 
       {/* Menu Items */}
@@ -68,5 +55,11 @@ function Sidebar({name}) {
     </div>
   );
 }
-
 export default Sidebar;
+
+
+
+
+
+
+
