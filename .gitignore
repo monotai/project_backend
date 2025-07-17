@@ -8,3 +8,6 @@
 /BackEnd/uploads/
 /post
 /bar
+/fake.py
+/fake_users.csv
+/restart_then_shutdown.bat
