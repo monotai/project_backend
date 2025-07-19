@@ -33,8 +33,8 @@ export default function Home() {
           <Sidebar name={name} />
         </div>
         <div className="home-posts">
-          <Stories/>
           <Uploadbar name={name} />
+          <Stories/>        
           {posts.map((post, index) => (
             <PostCard
               id={post.post_id}

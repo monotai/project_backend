@@ -8,14 +8,14 @@ const PORT = 4576;
 app.use(bodyParser.json());
 
 // Import routers
-import usersRouter from './routes/users.js';
-import postsRouter from './routes/posts.js';
-import commentsRouter from './routes/comments.js';
-import reactionsRouter from './routes/reactions.js';
-import friendshipsRouter from './routes/friendships.js';
-import notificationsRouter from './routes/notifications.js';
-import messagesRouter from './routes/messages.js';
-import uploadRouter from './routes/upload.js';
+import usersRouter from './src/routes/users.js';
+import postsRouter from './src/routes/posts.js';
+import commentsRouter from './src/routes/comments.js';
+import reactionsRouter from './src/routes/reactions.js';
+import friendshipsRouter from './src/routes/friendships.js';
+import notificationsRouter from './src/routes/notifications.js';
+import messagesRouter from './src/routes/messages.js';
+import uploadRouter from './src/routes/upload.js';
 // Use routers
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);

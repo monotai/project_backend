@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon BackEnd/server.js",
     "dev": "cd FrontEnd && npx vite",
-    "test": "nodemon BackEnd/app.js",
+    "test": "nodemon BackEnd/src/app.js",
     "all": "concurrently \"npm run test\" \"npm run dev\""
   },
   "dependencies": {

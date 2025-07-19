@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Type Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: auto;
+            background-color: #f9f9f9;
+        }
+        .label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .details {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .details h3 {
+            margin-top: 0;
+        }
+        .file-input {
+            margin-bottom: 10px;
+        }
+        .data-group {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+        }
+        .data-group h4 {
+            margin: 0 0 10px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .media {
+            margin-top: 10px;
+            max-width: 100%;
+            display: block;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <label for="fileInput" class="label">Upload a File:</label>
+    <input id="fileInput" class="file-input" type="file">
+    <p id="fileDetails">File Details: <strong>N/A</strong></p>
+
+    <label for="autoTypeInput" class="label">Enter value:</label>
+    <input id="autoTypeInput" class="input" type="text" placeholder="Type something...">
+    <p id="detectedType">Detected type: <strong>text</strong></p>
+    <div class="details">
+        <h3>Variable Details:</h3>
+        <p>Input Value: <strong id="inputValue">N/A</strong></p>
+        <p>Input Type: <strong id="inputType">text</strong></p>
+    </div>
+    <div id="dataGroupsContainer"></div>
+</div>
+
+<script>
+    const inputField = document.getElementById('autoTypeInput');
+    const detectedType = document.getElementById('detectedType').querySelector('strong');
+    const inputValueDisplay = document.getElementById('inputValue');
+    const inputTypeDisplay = document.getElementById('inputType');
+    const fileInput = document.getElementById('fileInput');
+    const fileDetails = document.getElementById('fileDetails').querySelector('strong');
+    const dataGroupsContainer = document.getElementById('dataGroupsContainer');
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            fileDetails.textContent = `Name: ${file.name}, Size: ${file.size} bytes, Type: ${file.type}`;
+            displayFilePreview(file);
+        } else {
+            fileDetails.textContent = 'N/A';
+        }
+    });
+
+    inputField.addEventListener('input', (event) => {
+        const value = event.target.value;
+        inputValueDisplay.textContent = value || 'N/A';
+
+        let type = 'text';
+
+        if (!isNaN(Number(value)) && value.trim() !== '') {
+            type = 'number';
+        } else if (/^[a-zA-Z]+$/.test(value)) {
+            type = 'text';
+        } else if (/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)) {
+            type = 'email';
+        }
+
+        detectedType.textContent = type;
+        inputTypeDisplay.textContent = type;
+        addDataGroup(value, type);
+    });
+
+    function addDataGroup(value, type) {
+        const dataGroup = document.createElement('div');
+        dataGroup.className = 'data-group';
+
+        const title = document.createElement('h4');
+        title.textContent = `Type: ${type}`;
+        dataGroup.appendChild(title);
+
+        const content = document.createElement('p');
+        content.textContent = `Value: ${value || 'N/A'}`;
+        dataGroup.appendChild(content);
+
+        dataGroupsContainer.appendChild(dataGroup);
+    }
+
+    function displayFilePreview(file) {
+        const fileURL = URL.createObjectURL(file);
+        const dataGroup = document.createElement('div');
+        dataGroup.className = 'data-group';
+
+        const title = document.createElement('h4');
+        title.textContent = `Preview: ${file.type}`;
+        dataGroup.appendChild(title);
+
+        let previewElement;
+        if (file.type.startsWith('image/')) {
+            previewElement = document.createElement('img');
+            previewElement.src = fileURL;
+        } else if (file.type.startsWith('audio/')) {
+            previewElement = document.createElement('audio');
+            previewElement.controls = true;
+            previewElement.src = fileURL;
+        } else if (file.type.startsWith('video/')) {
+            previewElement = document.createElement('video');
+            previewElement.controls = true;
+            previewElement.src = fileURL;
+        } else if (file.type === 'application/pdf') {
+            previewElement = document.createElement('embed');
+            previewElement.src = fileURL;
+            previewElement.type = 'application/pdf';
+            previewElement.width = '100%';
+            previewElement.height = '400px';
+        } else {
+            previewElement = document.createElement('p');
+            previewElement.textContent = 'No preview available';
+        }
+
+        previewElement.className = 'media';
+        dataGroup.appendChild(previewElement);
+
+        const downloadLink = document.createElement('a');
+        downloadLink.href = fileURL;
+        downloadLink.download = file.name;
+        downloadLink.textContent = 'Download File';
+        downloadLink.className = 'download-btn';
+        dataGroup.appendChild(downloadLink);
+
+        dataGroupsContainer.appendChild(dataGroup);
+    }
+</script>
+
+</body>
+</html>
