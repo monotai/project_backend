@@ -26,7 +26,7 @@ const PostCard = ({ id, name, profile, text, image, onDelelet}) => {
       <div className="post-header">
         <img src={profile} alt="Sina Ravy" className="avatar" />
         <div>
-          <h3>{name + id}</h3>
+          <h3>{name}</h3>
           <p>1m • <FaGlobeAsia /></p>
         </div>
         <img src="/cancel.png" alt="Cancel" className='add-image' onClick={() => handleDelete()}/>

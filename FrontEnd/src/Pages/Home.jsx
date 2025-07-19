@@ -5,6 +5,9 @@ import "../Style/Home.css"; // Adjust the path as necessary
 import Uploadbar from "./Component/Uploadbar";
 import { getLocally } from "../control";
 import { getPosts, getUsers } from "../control/index.js";
+import RightSidebar from "./Component/RightSidebar.jsx";
+import Stories from "./Component/Stories.jsx";
+import Header from "./Component/Header.jsx";
 
 export default function Home() {
   const user = getLocally('user');
@@ -24,22 +27,14 @@ export default function Home() {
   }, []);
 
   return <>
+    <Header />
     <div className="home-pages">
         <div className="home-sidebar">
           <Sidebar name={name} />
         </div>
         <div className="home-posts">
+          <Stories/>
           <Uploadbar name={name} />
-          {/* <PostCard name={"Sina Ravy"} profile={"/images/image.png"} text={"Miss you so much 😘#VY💗"} image={"/images/image.png"}/> */}
-          {/* {Array.from({ length: 20 }).map((_, idx) => (
-            <PostCard
-              key={idx}
-              name={`User ${idx + 1}`}
-              profile={`https://randomuser.me/api/portraits/men/${(idx % 10) + 1}.jpg`}
-              text={`Random post #${idx + 1} - Lorem ipsum dolor sit amet.`}
-              image={`https://picsum.photos/seed/${idx + 1}/300/200`}
-            />
-          ))} */}
           {posts.map((post, index) => (
             <PostCard
               id={post.post_id}
@@ -56,6 +51,10 @@ export default function Home() {
             />
           ))}
         </div>
+        <div className="right-sidebar">
+          <RightSidebar />
+        </div>
     </div>
+    
     </>;
 }
