@@ -1,40 +1,56 @@
-    import { Model, DataTypes } from 'sequelize';
-    import sequelize from '../config/database.js';
-    import User from './user.js'; // Adjust path as needed
-    import Post from './post.js'; // Adjust path as needed
 
-    class Comments extends Model {}
+import { Model, DataTypes } from 'sequelize';
+import sequelize from '../db/database.js';
+import User from './users.js'; 
+import Post from './posts.js'; 
 
-    Comments.init(
-        {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true,
-            },
-            text: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            userId: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
-            postId: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
-        },
-        {
-            sequelize,
-            modelName: 'Comments',
-            tableName: 'comments',
-            timestamps: true,
-        }
-    );
+class Comments extends Model {}
 
-    // Associations
-    Comments.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-    Comments.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
+// Initialize the Comments model with its table structure
+Comments.init(
+  {
+    // Primary key ID for each comment
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
 
-    export default Comments;
+    // Actual comment content
+    text: {
+      type: DataTypes.STRING,
+      allowNull: false, 
+    },
+
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    postId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize, 
+    modelName: 'Comments', 
+    tableName: 'comments', 
+    timestamps: true,
+  }
+);
+
+
+Comments.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user',
+  onDelete: 'CASCADE', 
+});
+
+// Each comment belongs to one post
+Comments.belongsTo(Post, {
+  foreignKey: 'postId',
+  as: 'post',
+  onDelete: 'CASCADE', 
+});
+export default Comments;
