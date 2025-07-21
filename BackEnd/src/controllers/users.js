@@ -1,7 +1,8 @@
+
 class UserController {
+    // Get all users
     static async getAllUsers(req, res) {
         try {
-            // Logic to fetch all users from the database
             const users = await UserModel.find();
             res.status(200).json(users);
         } catch (error) {
@@ -9,6 +10,7 @@ class UserController {
         }
     }
 
+    // Get a user by ID
     static async getUserById(req, res) {
         try {
             const userId = req.params.id;
@@ -22,6 +24,7 @@ class UserController {
         }
     }
 
+    // Create a user
     static async createUser(req, res) {
         try {
             const newUser = new UserModel(req.body);
@@ -32,11 +35,15 @@ class UserController {
         }
     }
 
+    // Update a user
     static async updateUser(req, res) {
         try {
             const userId = req.params.id;
-            const updatedUser = await UserModel.findByIdAnd
-            userId, req.body, { new: true };
+            const updatedUser = await UserModel.findByIdAndUpdate(
+                userId,
+                req.body,
+                { new: true }
+            );
             if (!updatedUser) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -46,6 +53,7 @@ class UserController {
         }
     }
 
+    // Delete a user
     static async deleteUser(req, res) {
         try {
             const userId = req.params.id;

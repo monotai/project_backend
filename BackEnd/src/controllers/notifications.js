@@ -1,17 +1,10 @@
-class notificationsController {
-  constructor() {
-    this.notifications = [];
-  }
+const controller = new notificationsController();
 
-  addNotification(notification) {
-    this.notifications.push(notification);
-  }
+// Add a notification
+controller.addNotification({ message: "New notification" });
 
-  getNotifications() {
-    return this.notifications;
-  }
+// Get notifications
+const all = controller.getNotifications();
 
-  clearNotifications() {
-    this.notifications = [];
-  }
-}
+// Clear notifications
+controller.clearNotifications();

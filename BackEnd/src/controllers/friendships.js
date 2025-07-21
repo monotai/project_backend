@@ -13,6 +13,21 @@ class friendshipController {
     }
   }
 
+  // Get a specific friendship
+  async getFriendship(req, res) {
+    try {
+      const { userId, friendId } = req.params;
+      const friendship = await this.friendshipService.getByUserAndFriendId(userId, friendId);
+      if (!friendship) {
+        return res.status(404).json({ error: 'Friendship not found' });
+      }
+      res.status(200).json(friendship);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  // Delete a specific friendship
   async deleteFriendship(req, res) {
     try {
       const { userId, friendId } = req.params;
@@ -31,5 +46,5 @@ class friendshipController {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
-}
+  } 
+}   
