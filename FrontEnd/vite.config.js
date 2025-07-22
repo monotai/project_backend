@@ -15,7 +15,7 @@ export default defineConfig({
     port: 3001,            // Port for Vite's dev server
     proxy: {
       '/api': {
-        target: 'http://localhost:4576', // Backend server
+        target: 'http://localhost:3000', // Backend server
         changeOrigin: true, // Ensure host headers match the target
         rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix
       },

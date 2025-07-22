@@ -1,5 +1,8 @@
+// middlewares/auth.js
+import jwt from 'jsonwebtoken';
+
 class AuthMiddleware {
-  static async authenticate(req, res, next) {
+  static authenticate(req, res, next) {
     try {
       const token = req.headers.authorization?.split(' ')[1];
       if (!token) {
@@ -10,7 +13,10 @@ class AuthMiddleware {
       req.user = decoded;
       next();
     } catch (error) {
+      console.error('JWT auth error:', error);
       return res.status(401).json({ message: 'Invalid token' });
     }
   }
 }
+
+export default AuthMiddleware;
