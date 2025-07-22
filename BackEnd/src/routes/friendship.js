@@ -1,5 +1,4 @@
 import express from 'express';
-import pool from '../db/index.js'; // Adjust the path as necessary
 import friendshipController from '../controllers/friendship.js';
 const router = express.Router();
 

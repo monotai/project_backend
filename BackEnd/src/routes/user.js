@@ -1,5 +1,4 @@
 import express from 'express';
-import pool from '../db/index.js';
 import UserController from '../controllers/user.js';
 
 const router = express.Router();

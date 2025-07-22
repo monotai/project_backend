@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-import pool from "../db/index.js";
 import commentsController from "../controllers/comment.js";
 
 // Get all comments for a post
