@@ -1,5 +1,6 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 import { corsMiddleware, requestLogger, notFoundHandler, errorHandler } from './middlewares/middlewares.js';
 import AuthMiddleware from './middlewares/auth.js';
@@ -14,18 +15,31 @@ import messagesRouter from './routes/message.js';
 import uploadRouter from './routes/upload.js';
 import shareRouter from './routes/share.js';
 
+import sequelize from './db/database.js';
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Security Middlewares
+app.use(helmet());
 app.use(corsMiddleware);
-app.use(bodyParser.json());
-app.use(requestLogger);
 
-// Public routes (e.g. user registration/login)
+// Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max requests per IP
+  message: 'Too many requests from this IP, please try again later.'
+});
+app.use(limiter);
+
+// Logging & JSON Parser
+app.use(requestLogger);
+app.use(express.json()); // replaces body-parser
+
+// Routes - Public
 app.use('/user', usersRouter);
 
-// Protected routes (example: require auth)
+// Routes - Protected
 app.use('/post', AuthMiddleware.authenticate, postsRouter);
 app.use('/comment', AuthMiddleware.authenticate, commentsRouter);
 app.use('/reaction', AuthMiddleware.authenticate, reactionsRouter);
@@ -35,17 +49,22 @@ app.use('/message', AuthMiddleware.authenticate, messagesRouter);
 app.use('/upload', AuthMiddleware.authenticate, uploadRouter);
 app.use('/share', AuthMiddleware.authenticate, shareRouter);
 
-// Base route
+// Base Route
 app.get('/', (req, res) => {
-  res.send('Welcome to the facebook API');
+  res.send('📘 Welcome to the Facebook API');
 });
 
-// 404 handler
+// 404 & Error Handlers
 app.use(notFoundHandler);
-
-// Error handler
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Sync DB and Start Server
+(async () => {
+  try {
+    await sequelize.sync({ alter: true }); // Keep schema in sync without data loss
+    console.log('📦 Database synced');
+    app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
+  } catch (err) {
+    console.error('❌ Failed to start server:', err);
+  }
+})();

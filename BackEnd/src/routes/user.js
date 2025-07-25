@@ -12,4 +12,10 @@ router.put('/:id', UserController.update);
 
 router.delete('/:id', UserController.delete);
 
+router.post('/test', UserController.test);
+
+router.get('/test', (_, res) => {
+    res.send('This is working!');
+});
+
 export default router;

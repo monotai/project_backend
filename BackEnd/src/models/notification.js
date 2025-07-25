@@ -13,6 +13,6 @@ Notification.init({
   content: { type: DataTypes.TEXT },
   is_read: { type: DataTypes.BOOLEAN, defaultValue: false },
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-}, { sequelize, modelName: 'notifications', timestamps: false });
+}, { sequelize, modelName: 'Notification', tableName: 'notifications', timestamps: false });
 
 export default Notification;

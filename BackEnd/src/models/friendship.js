@@ -11,6 +11,6 @@ Friendship.init({
     type: DataTypes.ENUM('pending', 'accepted', 'blocked'),
     defaultValue: 'pending'
   }
-}, { sequelize, modelName: 'friendships', timestamps: false });
+}, { sequelize, modelName: 'Friendships', tableName: 'friendships', timestamps: false });
 
 export default Friendship;

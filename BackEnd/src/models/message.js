@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, TableHints } from 'sequelize';
 import sequelize from '../db/database.js';
 
 class Message extends Model {}
@@ -11,6 +11,6 @@ Message.init({
   content_image_url: { type: DataTypes.STRING },
   content_video_url: { type: DataTypes.STRING },
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-}, { sequelize, modelName: 'messages', timestamps: false });
+}, { sequelize, modelName: 'Message', tableName: 'messages', timestamps: false });
 
 export default Message;

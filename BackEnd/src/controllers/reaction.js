@@ -1,4 +1,4 @@
-import Reaction from '../models/Reaction.js';
+import {Reaction} from '../models/index.js';
 
 class ReactionController {
   static async getAll(req, res) {

@@ -9,6 +9,6 @@ Share.init({
   post_id: { type: DataTypes.INTEGER, allowNull: false },
   caption: { type: DataTypes.STRING },
   share_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-}, { sequelize, modelName: 'shares', timestamps: false });
+}, { sequelize, modelName: 'Share', tableName: 'shares', timestamps: false });
 
 export default Share;

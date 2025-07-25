@@ -12,6 +12,6 @@ Comment.init({
   content_image_url: { type: DataTypes.STRING },
   content_video_url: { type: DataTypes.STRING },
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-}, { sequelize, modelName: 'comments', timestamps: false });
+}, { sequelize, modelNamea: 'Comment', tableName: 'comments', timestamps: false });
 
 export default Comment;

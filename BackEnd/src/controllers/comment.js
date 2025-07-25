@@ -1,4 +1,4 @@
-import Comment from '../models/Comment.js';
+import {Comment} from '../models/index.js';
 
 class CommentController {
   static async getAll(req, res) {

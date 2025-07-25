@@ -3,7 +3,7 @@ import Post from './Post.js';
 import Comment from './Comment.js';
 import Reaction from './Reaction.js';
 import Friendship from './Friendship.js';
-import Message from './Message.js';
+import Message from './message.js';
 import Share from './Share.js';
 import Notification from './Notification.js';
 

@@ -13,6 +13,6 @@ Reaction.init({
     allowNull: false
   },
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-}, { sequelize, modelName: 'reactions', timestamps: false });
+}, { sequelize, modelName: 'Reaction', tableName: 'reactions', timestamps: false });
 
 export default Reaction;

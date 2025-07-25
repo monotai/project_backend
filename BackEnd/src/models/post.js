@@ -10,6 +10,6 @@ Post.init({
   content_image_url: { type: DataTypes.STRING },
   content_video_url: { type: DataTypes.STRING },
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-}, { sequelize, modelName: 'posts', timestamps: false });
+}, { sequelize, modelName: 'Post', tableName: 'posts', timestamps: false });
 
 export default Post;

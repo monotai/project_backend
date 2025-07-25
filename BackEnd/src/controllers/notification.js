@@ -1,4 +1,4 @@
-import Notification from '../models/Notification.js';
+import {Notification} from '../models/index.js';
 
 class NotificationController {
   static async getAll(req, res) {

@@ -1,4 +1,4 @@
-import Share from '../models/share.js';
+import {Share} from '../models/index.js';
 
 class ShareController {
   static async getAll(req, res) {

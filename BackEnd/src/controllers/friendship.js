@@ -1,4 +1,4 @@
-import Friendship from '../models/Friendship.js';
+import {Friendship} from '../models/index.js';
 
 class FriendshipController {
   static async getAll(req, res) {
