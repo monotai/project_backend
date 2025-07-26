@@ -50,7 +50,7 @@ const PostCard = ({name, profile, onDelelet, post}) => {
         <img src={profile} alt="Sina Ravy" className="avatar" />
         <div>
           <h3>{name}</h3>
-          <p>1m • <FaGlobeAsia /></p>
+          <p>{post.created_at}<FaGlobeAsia /></p>
         </div>
         <img src="/cancel.png" alt="Cancel" className='add-image' onClick={() => handleDelete()}/>
       </div>

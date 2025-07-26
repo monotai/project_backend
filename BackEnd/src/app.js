@@ -58,10 +58,6 @@ app.get('/', (req, res) => {
   res.send('📘 Welcome to the Facebook API');
 });
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
-});
-
 // 404 & Error Handlers (Always last)
 app.use(notFoundHandler);
 app.use(errorHandler);
