@@ -1,10 +1,14 @@
 .stories-container {
+  width: 100%;                  /* Full width */
+  max-width: 500px;             /* Limit max size for center alignment */
+  margin: 0 auto;               /* Center horizontally */
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  padding: 1rem;
+  padding: 1rem 0;              /* Top-bottom padding only */
   border-radius: 0.5rem;
 }
+
 
 .story-card {
   position: relative;

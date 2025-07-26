@@ -55,7 +55,6 @@ export default function CreatePost() {
       try {
         let randomName;
         let exists = true;
-
         // Try random names until one doesn't exist
         while (exists) {
           randomName = generateRandomFilename(mediaFile.name);
@@ -82,8 +81,7 @@ export default function CreatePost() {
     const postData = {
       user_id: user ? user.user_id : "",
       content_text: text,
-      content_image_url: uploadedFilename,
-      content_video_url: "none"
+      content_file_url: uploadedFilename ? uploadedFilename : "",
     };
 
     const response = createPost(postData);

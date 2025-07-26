@@ -3,8 +3,8 @@ import Home from './Pages/Home.jsx';
 import Login from './Pages/Login.jsx';
 import CreateAccount from './Pages/CreateAccount.jsx';
 import React  from 'react';
-import Adminstation from './Pages/Adminstation.jsx';
-import Chat from './Pages/Chat.jsx';
+// import Adminstation from './Pages/Adminstation.jsx';
+// import Chat from './Pages/Chat.jsx';
 import Sidebar from './Pages/Component/Sidebar.jsx';
 import PostCard from './Pages/Component/PostCard.jsx';
 import Test from './Pages/Test.jsx';
@@ -30,9 +30,9 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login setUserId={handleSetUserId} />} />
-        <Route path="/chat" element={<Chat userId={userId} />} />
+        {/* <Route path="/chat" element={<Chat userId={userId} />} /> */}
         <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/adminstation" element={<Adminstation />} />
+        {/* <Route path="/adminstation" element={<Adminstation />} /> */}
         <Route path="/test" element={<Test />} />
         <Route path='/sidebar' element={<Sidebar /> } />
         <Route path='/post' element={<PostCard />} />

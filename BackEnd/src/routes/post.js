@@ -17,4 +17,6 @@ router.put('/:id', PostController.update);
 // Delete post
 router.delete('/:id', PostController.delete);
 
+router.post('/reaction', PostController.reaction);
+
 export default router;

@@ -1,4 +1,5 @@
 import { User } from '../models/index.js';
+import bcrypt from 'bcrypt';
 
 class UserController {
   static async getAll(req, res) {
@@ -55,6 +56,29 @@ class UserController {
     try {
       const body = req.body;
       res.json(body);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+
+  static async findByEmail(req, res) {
+    try {
+      const { email, password } = req.body;
+      const user = await User.findOne({ where: { email } });
+
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+
+      if (password && password !== user.password) {
+        return res.status(401).json({ error: 'Invalid password' });
+      }
+
+      // Don't return the password!
+      const { password: _pwd, ...safeUser } = user.toJSON();
+
+      res.json(safeUser);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

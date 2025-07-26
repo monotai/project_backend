@@ -1,14 +1,22 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: auto;         /* Allow height to grow */
+    overflow-y: auto;     /* Enable vertical scrolling */
+    font-family: sans-serif;
+    background-color: #f0f2f5; /* optional for nicer background */
+}
+
 
 .create-post {
     width: 450px;
-    height: auto;
     padding: 20px;
     border-radius: 16px;
     background-color: #FFFFFF;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* OR use 'flex-start' for top alignment */
     border: 1px solid #E4E6EB;
     margin: 30px auto;
 }
@@ -108,3 +116,4 @@
     cursor: pointer;
     margin-top: 10px;
 }
+

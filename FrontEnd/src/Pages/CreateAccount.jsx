@@ -1,13 +1,15 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 
 import "../Style/Auth.css";
 import { Link } from "react-router-dom";
+import { createUser, storeLocally } from "../control";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstname: "",
+    lastname: "",
     username: "",
     email: "",
     phone: "",
@@ -20,25 +22,33 @@ const SignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if fields are empty
-    if (!formData.fName || !formData.lName || !formData.username || !formData.email || !formData.phone || !formData.password) {
+    if (!formData.firstname || !formData.lastname || !formData.username || !formData.email || !formData.password) {
       setError("All fields are required.");
       return;
     }
 
-    // Store user data in localStorage
-    localStorage.setItem("user", JSON.stringify(formData));
+    const response = await createUser(formData);
 
-    alert(`Welcome, ${formData.lName}! Your account has been created.`);
+    if(response) {
+      // Store user data in localStorage
+      storeLocally('user', formData);
 
-    // Redirect to home page
-    navigate("/home");
+      alert(`Welcome, ${formData.lastname}! Your account has been created.`);
 
-    // Clear form
-    setFormData({ fullName: "", username: "", email: "", phone: "", password: "" });
+      // Redirect to home page
+      navigate("/home");
+
+      // Clear form
+      setFormData({ firstname: "", lastname: "", username: "", email: "", phone: "", password: "" });
+    } 
+    else {
+      setError("Failed to create account. Please try again.");
+    }
+    
   };
 
   
@@ -52,11 +62,11 @@ const SignUp = () => {
       {error && <p className="error-message">{error}</p>} 
 
       <form className="auth-form" onSubmit={handleSubmit}>
-        <input type="text" name="fName" placeholder="First Name" value={formData.fName} onChange={handleChange} required />
-        <input type="text" name="lName" placeholder="Last Name" value={formData.lName} onChange={handleChange} required />
+        <input type="text" name="firstname" placeholder="First Name" value={formData.firstname} onChange={handleChange} required />
+        <input type="text" name="lastname" placeholder="Last Name" value={formData.lastname} onChange={handleChange} required />
         <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
         <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
-        <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
+        {/* <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required /> */}
         <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
         <button type="submit"  >Submit</button>
       </form>

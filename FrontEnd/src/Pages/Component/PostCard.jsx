@@ -9,16 +9,39 @@ import {
   FaHeart,
   FaKissWinkHeart,
 } from "react-icons/fa";
-import { deletePost } from "../../control/index.js"; // Adjust the import path as necessary
+import { createPostReaction, deletePost, getLocally, handleDeleteFile } from "../../control/index.js"; // Adjust the import path as necessary
 
-const PostCard = ({ id, name, profile, text, image, onDelelet}) => {
+const PostCard = ({name, profile, onDelelet, post}) => {
+  const image = post.content_file_url && post.content_file_url !== "none"? `http://localhost:3001/api/upload/${post.content_file_url.replace(/(^"|"$)/g, '')}`: undefined
+  const [reaction, setReaction] = React.useState('like');
+  const user = getLocally('user');
+
+  const handleReaction = async (e) => {
+    // e.preventDefault();
+    // const response = await createPostReaction(post.post_id, user.user_id, reaction);
+    // if (response) {
+    //   console.log("Reaction added successfully");
+    //   setReaction(response.reaction_type);
+    // } else {
+    //   console.error("Failed to add reaction");
+    // }
+  }
+
   const handleDelete = async () => {
-    const response = await deletePost(id);
+    const response = await deletePost(post.post_id);
+
     if (response) {
       console.log("Post deleted successfully");
       onDelelet?.();
     } else {
       console.error("Failed to delete post");
+    }
+
+    const deleteImageResponse = await handleDeleteFile(image)
+    if (deleteImageResponse) {
+      console.log("Image deleted successfully");
+    } else {
+      console.error("Failed to delete image");
     }
   };
   return (
@@ -32,7 +55,7 @@ const PostCard = ({ id, name, profile, text, image, onDelelet}) => {
         <img src="/cancel.png" alt="Cancel" className='add-image' onClick={() => handleDelete()}/>
       </div>
       <div className="post-caption">
-      {text}
+      {post.content_text}
       </div>
 
       <div className="post-image">
@@ -49,12 +72,12 @@ const PostCard = ({ id, name, profile, text, image, onDelelet}) => {
       </div>
 
       <div className="post-reactions">
-      <span><FaThumbsUp /> <FaHeart /> <FaKissWinkHeart /> 19K</span>
-      <span>19K comment</span>
+      <span>{post.like_count + post.love_count + post.haha_count + post.wow_count + post.sad_count + post.angry_count}</span>
+      <span></span>
       </div>
 
       <div className="post-actions">
-      <button><FaThumbsUp /> Like</button>
+      <button><FaThumbsUp onClick={handleReaction}/> Like</button>
       <button><FaCommentAlt /> Comment</button>
       <button><FaShare /> Share</button>
       </div>

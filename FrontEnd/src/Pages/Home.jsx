@@ -34,19 +34,13 @@ export default function Home() {
         </div>
         <div className="home-posts">
           <Uploadbar name={name} />
-          <Stories/>        
-          {posts.map((post, index) => (
+          <Stories/>
+          {[...posts].reverse().map((post, index) => (
             <PostCard
-              id={post.post_id}
+              post={post}
               key={index}
               name={users.find(u => u.user_id === post.user_id)?.username || 'Unknown User'}
               profile="/images/profile.png"
-              text={post.content_text}
-              image={
-                post.content_image_url && post.content_image_url !== "none"
-                  ? `http://localhost:3001/api/upload/${post.content_image_url.replace(/(^"|"$)/g, '')}`
-                  : undefined
-              }
               onDelelet={() => setPosts(posts.filter(p => p.post_id !== post.post_id))}
             />
           ))}
@@ -55,6 +49,5 @@ export default function Home() {
           <RightSidebar />
         </div>
     </div>
-    
     </>;
 }

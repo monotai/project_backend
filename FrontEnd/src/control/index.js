@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-
-const API_BASE_URL = '/api'; // Adjust to your backend server
+import authAxios from './authAxios.js';
 
 export const storeLocally = (key, data) => {
   try {
@@ -30,8 +28,8 @@ export const getLocally = (key) => {
 // Create a new user
 export const createUser = async (newUser) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/users`, newUser);
         // alert(`Welcome, ${newUser.firstname}! Your account has been created.`);
+        const response = await authAxios.post(`/user`, newUser);
         return response.data; // return created user
     } catch (error) {
         console.error("Error creating user:", error.response?.data || error.message);
@@ -43,7 +41,7 @@ export const createUser = async (newUser) => {
 // Get all users
 export const getUsers = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/users`);
+        const response = await authAxios.get(`/user`);
         return response.data;
     } catch (error) {
         console.error("Error fetching users:", error.response?.data || error.message);
@@ -54,7 +52,7 @@ export const getUsers = async () => {
 // Get user by ID
 export const getUserById = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/users/${id}`);
+        const response = await authAxios.get(`/user/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching user:", error.response?.data || error.message);
@@ -62,10 +60,20 @@ export const getUserById = async (id) => {
     }
 };
 
+export const getUserByEmail = async (email, password) => {
+    try {
+        const response = await authAxios.post(`/user/login`, {email, password});
+        return response.data; // return user data if found
+    } catch (error) {
+        console.error("Error fetching user by email:", error.response?.data || error.message);
+        return null;
+    }
+};
+
 // Update user
 export const updateUser = async (id, updatedUser) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/users/${id}`, updatedUser);
+        const response = await authAxios.put(`/user/${id}`, updatedUser);
         return response.data;
     } catch (error) {
         console.error("Error updating user:", error.response?.data || error.message);
@@ -76,7 +84,7 @@ export const updateUser = async (id, updatedUser) => {
 // Delete user
 export const deleteUser = async (id) => {
     try {
-        await axios.delete(`${API_BASE_URL}/users/${id}`);
+        await authAxios.delete(`/user/${id}`);
         return true;
     } catch (error) {
         console.error("Error deleting user:", error.response?.data || error.message);
@@ -86,7 +94,7 @@ export const deleteUser = async (id) => {
 
 export const createComment = async (newComment) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/comments`, newComment);
+        const response = await authAxios.post(`/comment`, newComment);
         return response.data; // return created comment
     } catch (error) {
         console.error("Error creating comment:", error.response?.data || error.message);
@@ -96,7 +104,7 @@ export const createComment = async (newComment) => {
 
 export const getComments = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/comments`);
+        const response = await authAxios.get(`/comment`);
         return response.data;
     } catch (error) {
         console.error("Error fetching comments:", error.response?.data || error.message);
@@ -106,7 +114,7 @@ export const getComments = async () => {
 
 export const getCommentById = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/comments/${id}`);
+        const response = await authAxios.get(`/comment/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching comment:", error.response?.data || error.message);
@@ -116,7 +124,7 @@ export const getCommentById = async (id) => {
 
 export const updateComment = async (id, updatedComment) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/comments/${id}`, updatedComment);
+        const response = await authAxios.put(`/comment/${id}`, updatedComment);
         return response.data;
     } catch (error) {
         console.error("Error updating comment:", error.response?.data || error.message);
@@ -126,7 +134,7 @@ export const updateComment = async (id, updatedComment) => {
 
 export const deleteComment = async (id) => {
     try {
-        await axios.delete(`${API_BASE_URL}/comments/${id}`);
+        await authAxios.delete(`/comment/${id}`);
         return true;
     } catch (error) {
         console.error("Error deleting comment:", error.response?.data || error.message);
@@ -136,7 +144,7 @@ export const deleteComment = async (id) => {
 
 export const createFriendship = async (newFriendship) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/friendships`, newFriendship);
+        const response = await authAxios.post(`/friendship`, newFriendship);
         return response.data; // return created friendship
     } catch (error) {
         console.error("Error creating friendship:", error.response?.data || error.message);
@@ -146,7 +154,7 @@ export const createFriendship = async (newFriendship) => {
 
 export const getFriendships = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/friendships`);
+        const response = await authAxios.get(`/friendship`);
         return response.data;
     } catch (error) {
         console.error("Error fetching friendships:", error.response?.data || error.message);
@@ -156,7 +164,7 @@ export const getFriendships = async () => {
 
 export const getFriendshipById = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/friendships/${id}`);
+        const response = await authAxios.get(`/friendship/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching friendship:", error.response?.data || error.message);
@@ -166,7 +174,7 @@ export const getFriendshipById = async (id) => {
 
 export const updateFriendship = async (id, updatedFriendship) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/friendships/${id}`, updatedFriendship);
+        const response = await authAxios.put(`/friendship/${id}`, updatedFriendship);
         return response.data;
     } catch (error) {
         console.error("Error updating friendship:", error.response?.data || error.message);
@@ -176,7 +184,7 @@ export const updateFriendship = async (id, updatedFriendship) => {
 
 export const deleteFriendship = async (id) => {
     try {
-        await axios.delete(`${API_BASE_URL}/friendships/${id}`);
+        await authAxios.delete(`/friendship/${id}`);
         return true;
     } catch (error) {
         console.error("Error deleting friendship:", error.response?.data || error.message);
@@ -186,7 +194,7 @@ export const deleteFriendship = async (id) => {
 
 export const createMessage = async (newMessage) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/messages`, newMessage);
+        const response = await authAxios.post(`/message`, newMessage);
         return response.data; // return created message
     } catch (error) {
         console.error("Error creating message:", error.response?.data || error.message);
@@ -196,7 +204,7 @@ export const createMessage = async (newMessage) => {
 
 export const getMessages = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/messages`);
+        const response = await authAxios.get(`/message`);
         return response.data;
     } catch (error) {
         console.error("Error fetching messages:", error.response?.data || error.message);
@@ -206,7 +214,7 @@ export const getMessages = async () => {
 
 export const getMessageById = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/messages/${id}`);
+        const response = await authAxios.get(`/message/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching message:", error.response?.data || error.message);
@@ -216,7 +224,7 @@ export const getMessageById = async (id) => {
 
 export const updateMessage = async (id, updatedMessage) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/messages/${id}`, updatedMessage);
+        const response = await authAxios.put(`/message/${id}`, updatedMessage);
         return response.data;
     } catch (error) {
         console.error("Error updating message:", error.response?.data || error.message);
@@ -226,7 +234,7 @@ export const updateMessage = async (id, updatedMessage) => {
 
 export const deleteMessage = async (id) => {
     try {
-        await axios.delete(`${API_BASE_URL}/messages/${id}`);
+        await authAxios.delete(`/message/${id}`);
         return true;
     } catch (error) {
         console.error("Error deleting message:", error.response?.data || error.message);
@@ -236,7 +244,7 @@ export const deleteMessage = async (id) => {
 
 export const createNotification = async (newNotification) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/notifications`, newNotification);
+        const response = await authAxios.post(`/notification`, newNotification);
         return response.data; // return created notification
     } catch (error) {
         console.error("Error creating notification:", error.response?.data || error.message);
@@ -246,7 +254,7 @@ export const createNotification = async (newNotification) => {
 
 export const getNotifications = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/notifications`);
+        const response = await authAxios.get(`/notification`);
         return response.data;
     } catch (error) {
         console.error("Error fetching notifications:", error.response?.data || error.message);
@@ -256,7 +264,7 @@ export const getNotifications = async () => {
 
 export const getNotificationById = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/notifications/${id}`);
+        const response = await authAxios.get(`/notification/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching notification:", error.response?.data || error.message);
@@ -266,7 +274,7 @@ export const getNotificationById = async (id) => {
 
 export const updateNotification = async (id, updatedNotification) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/notifications/${id}`, updatedNotification);
+        const response = await authAxios.put(`/notification/${id}`, updatedNotification);
         return response.data;
     } catch (error) {
         console.error("Error updating notification:", error.response?.data || error.message);
@@ -276,7 +284,7 @@ export const updateNotification = async (id, updatedNotification) => {
 
 export const deleteNotification = async (id) => {
     try {
-        await axios.delete(`${API_BASE_URL}/notifications/${id}`);
+        await authAxios.delete(`/notification/${id}`);
         return true;
     } catch (error) {
         console.error("Error deleting notification:", error.response?.data || error.message);
@@ -286,7 +294,7 @@ export const deleteNotification = async (id) => {
 
 export const createPost = async (newPost) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/posts`, newPost);
+        const response = await authAxios.post(`/post`, newPost);
         return response.data; // return created post
     } catch (error) {
         console.error("Error creating post:", error.response?.data || error.message);
@@ -296,7 +304,7 @@ export const createPost = async (newPost) => {
 
 export const getPosts = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/posts`);
+        const response = await authAxios.get(`/post`);
         return response.data;
     } catch (error) {
         console.error("Error fetching posts:", error.response?.data || error.message);
@@ -306,7 +314,7 @@ export const getPosts = async () => {
 
 export const getPostById = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/posts/${id}`);
+        const response = await authAxios.get(`/post/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching post:", error.response?.data || error.message);
@@ -316,7 +324,7 @@ export const getPostById = async (id) => {
 
 export const updatePost = async (id, updatedPost) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/posts/${id}`, updatedPost);
+        const response = await authAxios.put(`/post/${id}`, updatedPost);
         return response.data;
     } catch (error) {
         console.error("Error updating post:", error.response?.data || error.message);
@@ -326,7 +334,7 @@ export const updatePost = async (id, updatedPost) => {
 
 export const deletePost = async (id) => {
     try {
-        await axios.delete(`${API_BASE_URL}/posts/${id}`);
+        await authAxios.delete(`/post/${id}`);
         return true;
     } catch (error) {
         console.error("Error deleting post:", error.response?.data || error.message);
@@ -334,9 +342,19 @@ export const deletePost = async (id) => {
     }
 };
 
+export const createPostReaction = async (post_id, user_id, newReaction) => {
+    try {
+        const response = await authAxios.post(`/post/reaction`, {post_id, user_id, newReaction});
+        return response.data; // return created reaction
+    } catch (error) {
+        console.error("Error creating post reaction:", error.response?.data || error.message);
+        return null;
+    }
+};
+
 export const createReaction = async (newReaction) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/reactions`, newReaction);
+        const response = await authAxios.post(`/reaction`, newReaction);
         return response.data; // return created reaction
     } catch (error) {
         console.error("Error creating reaction:", error.response?.data || error.message);
@@ -346,7 +364,7 @@ export const createReaction = async (newReaction) => {
 
 export const getReactions = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/reactions`);
+        const response = await authAxios.get(`/reaction`);
         return response.data;
     } catch (error) {
         console.error("Error fetching reactions:", error.response?.data || error.message);
@@ -356,7 +374,7 @@ export const getReactions = async () => {
 
 export const getReactionById = async (id) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/reactions/${id}`);
+        const response = await authAxios.get(`/reaction/${id}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching reaction:", error.response?.data || error.message);
@@ -366,7 +384,7 @@ export const getReactionById = async (id) => {
 
 export const updateReaction = async (id, updatedReaction) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/reactions/${id}`, updatedReaction);
+        const response = await authAxios.put(`/reaction/${id}`, updatedReaction);
         return response.data;
     } catch (error) {
         console.error("Error updating reaction:", error.response?.data || error.message);
@@ -376,7 +394,7 @@ export const updateReaction = async (id, updatedReaction) => {
 
 export const deleteReaction = async (id) => {
     try {
-        await axios.delete(`${API_BASE_URL}/reactions/${id}`);
+        await authAxios.delete(`/reaction/${id}`);
         return true;
     } catch (error) {
         console.error("Error deleting reaction:", error.response?.data || error.message);
@@ -388,12 +406,10 @@ export const deleteReaction = async (id) => {
 export const handleFileUpload = async (file) => {
   const formData = new FormData();
   formData.append("file", file);
-
-  const response = await fetch(`${API_BASE_URL}/upload`, {
+  const response = await fetch(`/api/upload`, {
     method: "POST",
     body: formData,
   });
-
   if (!response.ok) {
     const errText = await response.text();
     throw new Error(`File upload failed: ${errText}`);
@@ -409,7 +425,7 @@ export const handleFileUpload = async (file) => {
 // Get/download file from server
 export const handleFileGet = async (filename) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/upload/${filename}`);
+    const response = await fetch(`/api/upload/${filename}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch file");
@@ -426,7 +442,7 @@ export const handleFileGet = async (filename) => {
 // Delete file from server
 export const handleDeleteFile = async (filename) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/upload/${filename}`, {
+    const response = await fetch(`/api/upload/${filename}`, {
       method: "DELETE",
     });
 

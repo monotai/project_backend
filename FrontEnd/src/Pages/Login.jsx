@@ -1,7 +1,8 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../Style/Auth.css";
+import { getUserByEmail, storeLocally } from "../control";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,30 +16,19 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
-
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-
-  if (!storedUser) {
-    setError("No user found. Please sign up first.");
-    return;
-  }
-
-  if (
-    formData.email === storedUser.email &&
-    formData.password === storedUser.password
-  ) {
+  const user = await getUserByEmail(formData.email, formData.password);
+  alert(user.username + " " + user.email + " " + user.id);
+  if (user) {
     // Save essential info to localStorage
-    localStorage.setItem("userId", Date.now()); 
-    localStorage.setItem("firstName", storedUser.fName);
-    localStorage.setItem("lastName", storedUser.lName);
-
+    storeLocally('user', user);
     alert("Login successful!");
     navigate("/home");
-  } else {
-    setError("Incorrect username or password. Please try again.");
-    setFormData ({ email: "", password:" "});
+  }
+  else {
+    setError("No user found. Please sign up first.");
+    return;
   }
 };
 

@@ -1,9 +1,7 @@
 import express from 'express';
-import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
-
+import dotenv from 'dotenv';
 import { corsMiddleware, requestLogger, notFoundHandler, errorHandler } from './middlewares/middlewares.js';
-import AuthMiddleware from './middlewares/auth.js';
+import authMiddleware from './middlewares/auth.js';
 
 import usersRouter from './routes/user.js';
 import postsRouter from './routes/post.js';
@@ -17,53 +15,69 @@ import shareRouter from './routes/share.js';
 
 import sequelize from './db/database.js';
 
+// Load environment variables
+dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Security Middlewares
-app.use(helmet());
+// Global Middlewares
 app.use(corsMiddleware);
-
-// Rate Limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // max requests per IP
-  message: 'Too many requests from this IP, please try again later.'
-});
-app.use(limiter);
-
-// Logging & JSON Parser
 app.use(requestLogger);
-app.use(express.json()); // replaces body-parser
+app.use(express.json());
 
-// Routes - Public
+// Public Routes
 app.use('/user', usersRouter);
+app.use('/upload', uploadRouter);
 
-// Routes - Protected
-app.use('/post', AuthMiddleware.authenticate, postsRouter);
-app.use('/comment', AuthMiddleware.authenticate, commentsRouter);
-app.use('/reaction', AuthMiddleware.authenticate, reactionsRouter);
-app.use('/friendship', AuthMiddleware.authenticate, friendshipsRouter);
-app.use('/notification', AuthMiddleware.authenticate, notificationsRouter);
-app.use('/message', AuthMiddleware.authenticate, messagesRouter);
-app.use('/upload', AuthMiddleware.authenticate, uploadRouter);
-app.use('/share', AuthMiddleware.authenticate, shareRouter);
+// Protected Routes
+const protectedRoutes = [
+  ['post', postsRouter],
+  ['comment', commentsRouter],
+  ['reaction', reactionsRouter],
+  ['friendship', friendshipsRouter],
+  ['notification', notificationsRouter],
+  ['message', messagesRouter],
+  ['share', shareRouter],
+];
 
-// Base Route
+protectedRoutes.forEach(([path, router]) => {
+  app.use(`/${path}`, authMiddleware.authenticate, router);
+});
+
+app.get('/test-auth', authMiddleware.authenticate, (req, res) => {
+  res.json({
+    message: '✅ Access granted',
+    user: req.user,
+  });
+});
+
+
+// Health & Welcome Route
 app.get('/', (req, res) => {
   res.send('📘 Welcome to the Facebook API');
 });
 
-// 404 & Error Handlers
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+// 404 & Error Handlers (Always last)
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-// Sync DB and Start Server
+// Start Server
 (async () => {
   try {
-    await sequelize.sync({ alter: true }); // Keep schema in sync without data loss
+    await sequelize.authenticate();
+    console.log('✅ Database connection authenticated');
+
+    await sequelize.sync(); // In production, prefer migrations
     console.log('📦 Database synced');
-    app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running at http://localhost:${PORT}`);
+    });
   } catch (err) {
     console.error('❌ Failed to start server:', err);
   }

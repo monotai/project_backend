@@ -1,6 +1,8 @@
 // middlewares/auth.js
 import jwt from 'jsonwebtoken';
 
+const tokenSecret = 'hello';
+
 class AuthMiddleware {
   static authenticate(req, res, next) {
     try {
@@ -9,7 +11,7 @@ class AuthMiddleware {
         return res.status(401).json({ message: 'No token provided' });
       }
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, tokenSecret);
       req.user = decoded;
       next();
     } catch (error) {
