@@ -29,11 +29,11 @@ app.use(express.json());
 // Public Routes
 app.use('/user', usersRouter);
 app.use('/upload', uploadRouter);
+app.use('/comment', commentsRouter);
 
 // Protected Routes
 const protectedRoutes = [
   ['post', postsRouter],
-  ['comment', commentsRouter],
   ['reaction', reactionsRouter],
   ['friendship', friendshipsRouter],
   ['notification', notificationsRouter],
