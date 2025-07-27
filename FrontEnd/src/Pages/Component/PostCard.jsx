@@ -16,17 +16,6 @@ const PostCard = ({name, profile, onDelelet, post}) => {
   const [reaction, setReaction] = React.useState('like');
   const user = getLocally('user');
 
-  const handleReaction = async (e) => {
-    // e.preventDefault();
-    // const response = await createPostReaction(post.post_id, user.user_id, reaction);
-    // if (response) {
-    //   console.log("Reaction added successfully");
-    //   setReaction(response.reaction_type);
-    // } else {
-    //   console.error("Failed to add reaction");
-    // }
-  }
-
   const handleDelete = async () => {
     const response = await deletePost(post.post_id);
 
