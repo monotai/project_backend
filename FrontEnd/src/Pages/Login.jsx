@@ -19,7 +19,6 @@ const Login = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   const user = await getUserByEmail(formData.email, formData.password);
-  alert(user.username + " " + user.email + " " + user.id);
   if (user) {
     // Save essential info to localStorage
     storeLocally('user', user);

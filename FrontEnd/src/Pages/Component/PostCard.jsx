@@ -66,7 +66,7 @@ const PostCard = ({name, profile, onDelelet, post}) => {
       </div>
 
       <div className="post-actions">
-      <button><FaThumbsUp onClick={handleReaction}/> Like</button>
+      <button><FaThumbsUp /> Like</button>
       <button><FaCommentAlt /> Comment</button>
       <button><FaShare /> Share</button>
       </div>
